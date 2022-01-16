@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
+import dotenv from "dotenv";
 
 const app = express();
+dotenv.config();
 
 app.get("/api", (req: Request, res: Response) => {
   res.send("You have reached the express server");
