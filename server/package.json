@@ -7,13 +7,14 @@
     "prebuild": "tslint -c tslint.json -p tsconfig.json --fix",
     "build": "tsc",
     "prestart": "npm run build",
-    "dev": "concurrently \"tsc --watch\" \"nodemon serverBuild/server.js\"",
-    "start": "nodemon .",
+    "dev": "concurrently \"tsc --watch\" \"nodemon dist/index.js\"",
+    "start": "node .",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Gautham Dinesh",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^1.19.1",
     "dotenv": "^12.0.4",
     "express": "^4.17.2",
     "mongodb": "^4.3.0",

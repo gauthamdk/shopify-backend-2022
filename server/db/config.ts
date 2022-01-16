@@ -1,9 +1,8 @@
-import mongoose from "mongoose";
-
+import { MongoClient } from "mongodb";
 const connectionString = process.env.MONGO_URI;
 
 const connect = () => {
-  return mongoose.connect(connectionString, {});
+  return new MongoClient(connectionString, {}).connect();
 };
 
 export default connect;
