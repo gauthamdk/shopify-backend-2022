@@ -13,6 +13,16 @@ import { IItem } from "./interfaces/Item";
 function App() {
   const [items, setItems] = useState<IItem[]>([]);
 
+  const create = async (name: string, description: string, amount: string) => {
+    const res = axios.post("/api/create", {
+      name: name,
+      description: description,
+      amount: amount,
+    });
+
+    console.log(res);
+  };
+
   useEffect(() => {
     const getData = async () => {
       const res = await axios.get("/api/display");
@@ -37,7 +47,11 @@ function App() {
             <h2>Amount</h2>
           </Col>
           <Col xs={3} style={{ textAlign: "center" }}>
-            <FontAwesomeIcon icon={faPlusSquare} size="2x"></FontAwesomeIcon>
+            <FontAwesomeIcon
+              icon={faPlusSquare}
+              size="2x"
+              onClick={create}
+            ></FontAwesomeIcon>
           </Col>
         </Row>
         <Row>
