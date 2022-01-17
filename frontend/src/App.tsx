@@ -5,6 +5,8 @@ import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 
 import { IItem } from "./interfaces/Item";
 
@@ -34,7 +36,9 @@ function App() {
           <Col xs={2}>
             <h2>Amount</h2>
           </Col>
-          <Col xs={3}>Plus</Col>
+          <Col xs={3} style={{ textAlign: "center" }}>
+            <FontAwesomeIcon icon={faPlusSquare} size="2x"></FontAwesomeIcon>
+          </Col>
         </Row>
         <Row>
           {items.length > 0 ? (
@@ -44,7 +48,7 @@ function App() {
                   <Col xs={3}>{item.name}</Col>
                   <Col xs={4}>{item.description}</Col>
                   <Col xs={2}>{item.amount}</Col>
-                  <Col xs={3}>
+                  <Col xs={3} style={{ textAlign: "right" }}>
                     <Button variant="primary">Edit</Button>{" "}
                     <Button variant="danger">Delete</Button>
                   </Col>
