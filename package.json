@@ -1,0 +1,23 @@
+{
+  "name": "shopify-backend-2022",
+  "version": "1.0.0",
+  "description": "Shopify coding challenge for summer 2022 backend and production engineer.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"cd server && npm run dev\" \"cd frontend && npm start\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gauthamdk/shopify-backend-2022.git"
+  },
+  "author": "Gautham Dinesh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gauthamdk/shopify-backend-2022/issues"
+  },
+  "homepage": "https://github.com/gauthamdk/shopify-backend-2022#readme",
+  "devDependencies": {
+    "webpack-dev-server": "^4.7.3"
+  }
+}
