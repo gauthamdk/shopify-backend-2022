@@ -1,10 +1,12 @@
-import express, { application, Request, Response } from "express";
+import express, { Request, Response } from "express";
 import dotenv from "dotenv";
 
 dotenv.config();
 
 import { Item } from "./db/models/inventory";
 import { IItem } from "./interfaces/Item";
+import { ItemDoc } from "./interfaces/ItemDoc";
+import { NativeError } from "mongoose";
 
 const app = express();
 
@@ -16,7 +18,7 @@ app.get("/api", (req: Request, res: Response) => {
 });
 
 app.get("/api/display", (req: Request, res: Response) => {
-  Item.find({}, (err, items) => {
+  Item.find({}, (err: NativeError, items: ItemDoc[]) => {
     if (err) {
       res.send("Error retrieving items");
     } else {
@@ -34,7 +36,7 @@ app.post("/api/create", async (req: Request, res: Response) => {
 
   const item = Item.build({ name, description, amount });
 
-  Item.create(item, (err: any, newItem: IItem) => {
+  Item.create(item, (err: NativeError, newItem: ItemDoc) => {
     if (err) {
       res.json({ message: "error" + err });
     } else {
@@ -44,16 +46,26 @@ app.post("/api/create", async (req: Request, res: Response) => {
 });
 
 app.put("/api/:id", (req: Request, res: Response) => {
-  const id = req.params.id;
+  const id: string = req.params.id;
 
   const item: IItem = req.body;
 
-  Item.findByIdAndUpdate(id, item, (err: any, newItem: IItem) => {
+  Item.findByIdAndUpdate(id, item, (err: NativeError, newItem: ItemDoc) => {
     if (err) {
-      console.log(err);
       res.json({ message: "error updating item" });
     } else {
       res.json({ message: "item updated" });
+    }
+  });
+});
+
+app.delete("/api/:id", (req: Request, res: Response) => {
+  const id: string = req.params.id;
+  Item.findByIdAndDelete(id, (err: NativeError) => {
+    if (err) {
+      res.json({ message: "error deleting" });
+    } else {
+      res.json({ message: "successfully deleted" });
     }
   });
 });
