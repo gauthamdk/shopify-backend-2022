@@ -43,6 +43,21 @@ app.post("/api/create", async (req: Request, res: Response) => {
   });
 });
 
+app.put("/api/:id", (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  const item: IItem = req.body;
+
+  Item.findByIdAndUpdate(id, item, (err: any, newItem: IItem) => {
+    if (err) {
+      console.log(err);
+      res.json({ message: "error updating item" });
+    } else {
+      res.json({ message: "item updated" });
+    }
+  });
+});
+
 const PORT = process.env.PORT || 8080;
 
 app.listen(PORT, () => {
