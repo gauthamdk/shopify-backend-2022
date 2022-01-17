@@ -9,18 +9,22 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 
 import { IItem } from "./interfaces/Item";
+import AddItem from "./components/AddItem";
+import { setConstantValue } from "typescript";
 
 function App() {
-  const [items, setItems] = useState<IItem[]>([]);
+  // todo: add type
+  const [items, setItems] = useState<any[]>([]);
 
-  const create = async (name: string, description: string, amount: string) => {
-    const res = axios.post("/api/create", {
-      name: name,
-      description: description,
-      amount: amount,
-    });
+  const [create, setCreate] = useState(false);
 
+  const handleDelete = async (id: any) => {
+    const res = await axios.delete(`/api/${id}`);
     console.log(res);
+  };
+
+  const showForm = () => {
+    setCreate(!create);
   };
 
   useEffect(() => {
@@ -50,7 +54,7 @@ function App() {
             <FontAwesomeIcon
               icon={faPlusSquare}
               size="2x"
-              onClick={create}
+              onClick={() => showForm()}
             ></FontAwesomeIcon>
           </Col>
         </Row>
@@ -64,7 +68,12 @@ function App() {
                   <Col xs={2}>{item.amount}</Col>
                   <Col xs={3} style={{ textAlign: "right" }}>
                     <Button variant="primary">Edit</Button>{" "}
-                    <Button variant="danger">Delete</Button>
+                    <Button
+                      variant="danger"
+                      onClick={() => handleDelete(item._id)}
+                    >
+                      Delete
+                    </Button>
                   </Col>
                 </>
               );
@@ -73,6 +82,7 @@ function App() {
             <></>
           )}
         </Row>
+        {create ? <AddItem></AddItem> : <></>}
       </div>
     </Container>
   );
