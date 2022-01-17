@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Container from "react-bootstrap/Container";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
@@ -10,7 +10,7 @@ import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
 
 import { IItem } from "./interfaces/Item";
 import AddItem from "./components/AddItem";
-import { setConstantValue } from "typescript";
+import getData from "./functions/getData";
 
 function App() {
   // todo: add type
@@ -18,22 +18,31 @@ function App() {
 
   const [create, setCreate] = useState(false);
 
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+
   const handleDelete = async (id: any) => {
-    const res = await axios.delete(`/api/${id}`);
-    console.log(res);
+    try {
+      const res = await axios.delete(`/api/${id}`);
+      setSuccessMsg(res.data.message);
+      const newItems = await getData();
+      setItems(newItems);
+    } catch (err: any) {
+      setErrMsg(err.response.data.message);
+    }
   };
 
   const showForm = () => {
     setCreate(!create);
   };
 
-  useEffect(() => {
-    const getData = async () => {
-      const res = await axios.get("/api/display");
-      setItems(res.data);
-    };
+  const fetchData = async () => {
+    const data = await getData();
+    setItems(data);
+  };
 
-    getData();
+  useEffect(() => {
+    fetchData();
   }, []);
 
   return (
@@ -58,6 +67,8 @@ function App() {
             ></FontAwesomeIcon>
           </Col>
         </Row>
+        {successMsg}
+        {errMsg}
         <Row>
           {items.length > 0 ? (
             items.map((item) => {
@@ -82,7 +93,7 @@ function App() {
             <></>
           )}
         </Row>
-        {create ? <AddItem></AddItem> : <></>}
+        {create ? <AddItem getItems={fetchData}></AddItem> : <></>}
       </div>
     </Container>
   );

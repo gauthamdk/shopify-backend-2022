@@ -4,19 +4,31 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import axios from "axios";
 
-export default function AddItem() {
+export default function AddItem({
+  getItems,
+}: {
+  getItems: () => Promise<void>;
+}) {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
   const [amount, setAmount] = useState("");
 
-  const addItem = async (name: string, description: string, amount: string) => {
-    const res = await axios.post("/api/create", {
-      name: name,
-      description: description,
-      amount: amount,
-    });
+  const [successMsg, setSuccessMsg] = useState("");
+  const [errMsg, setErrMsg] = useState("");
 
-    console.log(res);
+  const addItem = async (name: string, description: string, amount: string) => {
+    try {
+      const res = await axios.post("/api/create", {
+        name: name,
+        description: description,
+        amount: amount,
+      });
+
+      setSuccessMsg(res.data.message);
+      getItems();
+    } catch (err: any) {
+      setErrMsg(err.response.data.message);
+    }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -65,6 +77,8 @@ export default function AddItem() {
           Add Item
         </Button>
       </Form>
+      {successMsg}
+      {errMsg}
     </Container>
   );
 }
