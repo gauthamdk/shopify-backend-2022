@@ -15,6 +15,16 @@ app.get("/api", (req: Request, res: Response) => {
   res.send("You have reached the express server dist");
 });
 
+app.get("/api/display", (req: Request, res: Response) => {
+  Item.find({}, (err, items) => {
+    if (err) {
+      res.send("Error retrieving items");
+    } else {
+      res.send(items);
+    }
+  });
+});
+
 app.post("/api/create", async (req: Request, res: Response) => {
   const {
     name,
@@ -23,7 +33,7 @@ app.post("/api/create", async (req: Request, res: Response) => {
   }: { name: string; description: string; amount: number } = req.body;
 
   const item = Item.build({ name, description, amount });
-  // tslint:disable-next-line:no-console
+
   Item.create(item, (err: any, newItem: IItem) => {
     if (err) {
       res.json({ message: "error" + err });
