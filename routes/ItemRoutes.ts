@@ -19,9 +19,9 @@ router.get("/", (req: Request, res: Response) => {
 });
 
 router.post("/", async (req: Request, res: Response) => {
-  const newItem: IItem = req.body;
+  const itemDetails: IItem = req.body;
 
-  const item = Item.build(newItem);
+  const item = Item.build(itemDetails);
 
   Item.create(item, (err: NativeError, newItem: ItemDoc) => {
     if (err) {
