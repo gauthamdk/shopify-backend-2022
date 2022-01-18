@@ -32,7 +32,7 @@ export default function Header({ showForm }: { showForm: () => void }) {
       <Col xs={2}>
         <h2>Amount</h2>
       </Col>
-      <Col xs={3} style={{ textAlign: "center" }}>
+      <Col xs={3} className="d-flex justify-content-around">
         {close ? (
           <FontAwesomeIcon
             size="2x"
