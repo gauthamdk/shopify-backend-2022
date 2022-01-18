@@ -18,7 +18,9 @@ export default function Header({ showForm }: { showForm: () => void }) {
     try {
       const res = await axios.get("/api/download");
       fileDownload(res.data, "items.csv");
-    } catch (error) {}
+    } catch (error) {
+      //todo: catch error message
+    }
   };
 
   return (

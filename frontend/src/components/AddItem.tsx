@@ -20,7 +20,7 @@ export default function AddItem({
 
   const addItem = async (name: string, description: string, amount: string) => {
     try {
-      const res = await axios.post("/api/create", {
+      const res = await axios.post("/api", {
         name: name,
         description: description,
         amount: amount,
