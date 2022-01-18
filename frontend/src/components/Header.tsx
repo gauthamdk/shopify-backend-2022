@@ -2,11 +2,25 @@ import React, { useState } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlusSquare, faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import {
+  faPlusSquare,
+  faWindowClose,
+  faDownload,
+} from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
+import fileDownload from "js-file-download";
 import "../App.css";
 
 export default function Header({ showForm }: { showForm: () => void }) {
   const [close, setClose] = useState(false);
+
+  const downloadCSV = async () => {
+    try {
+      const res = await axios.get("/api/download");
+      fileDownload(res.data, "items.csv");
+    } catch (error) {}
+  };
+
   return (
     <Row>
       <Col xs={3}>
@@ -40,6 +54,12 @@ export default function Header({ showForm }: { showForm: () => void }) {
             className="pointer"
           />
         )}
+        <FontAwesomeIcon
+          icon={faDownload}
+          size="2x"
+          onClick={() => downloadCSV()}
+          className="pointer"
+        />
       </Col>
     </Row>
   );
