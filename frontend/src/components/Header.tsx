@@ -7,19 +7,30 @@ import {
   faWindowClose,
   faDownload,
 } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import fileDownload from "js-file-download";
 import "../App.css";
 
-export default function Header({ showForm }: { showForm: () => void }) {
+export default function Header({
+  showForm,
+  setErr,
+}: {
+  showForm: () => void;
+  setErr: React.Dispatch<React.SetStateAction<string>>;
+}) {
   const [close, setClose] = useState(false);
 
   const downloadCSV = async () => {
     try {
       const res = await axios.get("/api/download");
       fileDownload(res.data, "items.csv");
-    } catch (error) {
-      //todo: catch error message
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const serverError = err as AxiosError;
+        if (serverError && serverError.response) {
+          setErr(serverError.response.data.message);
+        }
+      }
     }
   };
 

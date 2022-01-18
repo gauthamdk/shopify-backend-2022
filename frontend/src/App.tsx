@@ -44,7 +44,7 @@ function App() {
     <Container className="App">
       <h1>Inventory Tracking</h1>
       <div>
-        <Header showForm={showForm} />
+        <Header showForm={showForm} setErr={setErrMsg} />
         {successMsg.length > 0 ? (
           <Alert variant="success">{successMsg}</Alert>
         ) : (
