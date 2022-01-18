@@ -67,6 +67,7 @@ export default function EditItem({
         <Col xs={3}>
           <Form.Group className="mb-3" controlId="formName">
             <Form.Control
+              required
               type="text"
               name="name"
               value={newName}
@@ -80,6 +81,7 @@ export default function EditItem({
         <Col xs={4}>
           <Form.Group className="mb-3" controlId="formDescription">
             <Form.Control
+              required
               type="text"
               name="desc"
               value={newDesc}
@@ -93,6 +95,7 @@ export default function EditItem({
         <Col xs={2}>
           <Form.Group className="mb-3" controlId="formAmount">
             <Form.Control
+              required
               type="number"
               min="0"
               name="amount"

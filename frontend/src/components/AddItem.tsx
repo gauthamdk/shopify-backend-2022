@@ -13,12 +13,12 @@ export default function AddItem({
 }) {
   const [name, setName] = useState("");
   const [desc, setDesc] = useState("");
-  const [amount, setAmount] = useState("");
+  const [amount, setAmount] = useState(0);
 
   const [successMsg, setSuccessMsg] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
-  const addItem = async (name: string, description: string, amount: string) => {
+  const addItem = async (name: string, description: string, amount: number) => {
     try {
       const res = await axios.post("/api", {
         name: name,
@@ -44,6 +44,7 @@ export default function AddItem({
         <Form.Group className="mb-3" controlId="formName">
           <Form.Label>Name</Form.Label>
           <Form.Control
+            required
             type="text"
             name="name"
             placeholder="Name of item"
@@ -55,6 +56,7 @@ export default function AddItem({
         <Form.Group className="mb-3" controlId="formDescription">
           <Form.Label>Description</Form.Label>
           <Form.Control
+            required
             type="text"
             name="desc"
             placeholder="Short description"
@@ -66,12 +68,13 @@ export default function AddItem({
         <Form.Group className="mb-3" controlId="formAmount">
           <Form.Label>Amount</Form.Label>
           <Form.Control
+            required
             type="number"
             min="0"
             name="amount"
             placeholder="Number in stock"
             onChange={(e) => {
-              setAmount(e.target.value);
+              setAmount(parseInt(e.target.value));
             }}
           />
         </Form.Group>
