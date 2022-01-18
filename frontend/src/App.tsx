@@ -7,21 +7,24 @@ import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare } from "@fortawesome/free-solid-svg-icons";
+import { ObjectId } from "mongoose";
 
 import { IItem } from "./interfaces/Item";
 import AddItem from "./components/AddItem";
 import getData from "./functions/getData";
+import EditItem from "./components/EditItem";
 
 function App() {
   // todo: add type
   const [items, setItems] = useState<any[]>([]);
 
   const [create, setCreate] = useState(false);
+  const [edit, setEdit] = useState(false);
 
   const [successMsg, setSuccessMsg] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
-  const handleDelete = async (id: any) => {
+  const handleDelete = async (id: ObjectId) => {
     try {
       const res = await axios.delete(`/api/${id}`);
       setSuccessMsg(res.data.message);
@@ -69,30 +72,41 @@ function App() {
         </Row>
         {successMsg}
         {errMsg}
-        <Row>
-          {items.length > 0 ? (
-            items.map((item) => {
-              return (
-                <>
-                  <Col xs={3}>{item.name}</Col>
-                  <Col xs={4}>{item.description}</Col>
-                  <Col xs={2}>{item.amount}</Col>
-                  <Col xs={3} style={{ textAlign: "right" }}>
-                    <Button variant="primary">Edit</Button>{" "}
-                    <Button
-                      variant="danger"
-                      onClick={() => handleDelete(item._id)}
-                    >
-                      Delete
-                    </Button>
-                  </Col>
-                </>
-              );
-            })
-          ) : (
-            <></>
-          )}
-        </Row>
+        {items.length > 0 ? (
+          items.map((item) => {
+            return (
+              <Row className="mb-2">
+                <Col xs={3}>{item.name}</Col>
+                <Col xs={4}>{item.description}</Col>
+                <Col xs={2}>{item.amount}</Col>
+                <Col xs={3} style={{ textAlign: "center" }}>
+                  <Button variant="primary" onClick={() => setEdit(!edit)}>
+                    Edit
+                  </Button>{" "}
+                  <Button
+                    variant="danger"
+                    onClick={() => handleDelete(item._id)}
+                  >
+                    Delete
+                  </Button>
+                  {edit ? (
+                    <EditItem
+                      id={item._id}
+                      name={item.name}
+                      desc={item.description}
+                      amount={item.amount}
+                      getItems={fetchData}
+                    ></EditItem>
+                  ) : (
+                    <></>
+                  )}
+                </Col>
+              </Row>
+            );
+          })
+        ) : (
+          <></>
+        )}
         {create ? <AddItem getItems={fetchData}></AddItem> : <></>}
       </div>
     </Container>
