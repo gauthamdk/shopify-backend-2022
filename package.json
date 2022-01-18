@@ -4,6 +4,7 @@
   "description": "Shopify coding challenge for summer 2022 backend and production engineer.",
   "main": "index.js",
   "scripts": {
+    "install": "concurrently \"cd frontend && npm install\" \"cd server && npm install\"",
     "dev": "concurrently \"cd server && npm run dev\" \"cd frontend && npm start\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -18,6 +19,6 @@
   },
   "homepage": "https://github.com/gauthamdk/shopify-backend-2022#readme",
   "devDependencies": {
-    "webpack-dev-server": "^4.7.3"
+    "concurrently": "^7.0.0"
   }
 }
