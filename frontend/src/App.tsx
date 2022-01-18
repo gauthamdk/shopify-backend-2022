@@ -8,9 +8,9 @@ import getData from "./functions/getData";
 import DisplayItem from "./components/DisplayItem";
 import Header from "./components/Header";
 import Alert from "react-bootstrap/Alert";
+import axios, { AxiosError } from "axios";
 
 function App() {
-  // todo: add type
   const [items, setItems] = useState<ItemDoc[]>([]);
 
   const [create, setCreate] = useState(false);
@@ -23,8 +23,17 @@ function App() {
   };
 
   const fetchData = async () => {
-    const data = await getData();
-    setItems(data);
+    try {
+      const data = await getData();
+      setItems(data);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const serverError = err as AxiosError;
+        if (serverError && serverError.response) {
+          setErrMsg(serverError.response.data.message);
+        }
+      }
+    }
   };
 
   useEffect(() => {

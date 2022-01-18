@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import Button from "react-bootstrap/Button";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import { ObjectId } from "mongoose";
 
 export default function EditItem({
@@ -13,6 +13,8 @@ export default function EditItem({
   amount,
   getItems,
   save,
+  setSuccess,
+  setErr,
 }: {
   id: ObjectId;
   name: string;
@@ -20,13 +22,12 @@ export default function EditItem({
   amount: number;
   getItems: () => Promise<void>;
   save: React.Dispatch<React.SetStateAction<boolean>>;
+  setSuccess: React.Dispatch<React.SetStateAction<string>>;
+  setErr: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const [newName, setNewName] = useState(name);
   const [newDesc, setNewDesc] = useState(desc);
   const [newAmount, setNewAmount] = useState(amount);
-
-  const [successMsg, setSuccessMsg] = useState("");
-  const [errMsg, setErrMsg] = useState("");
 
   const editItem = async (
     id: ObjectId,
@@ -41,8 +42,17 @@ export default function EditItem({
         amount: amount,
       });
 
+      setSuccess("Edited product");
+
       getItems();
-    } catch (err: any) {}
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const serverError = err as AxiosError;
+        if (serverError && serverError.response) {
+          setErr(serverError.response.data.message);
+        }
+      }
+    }
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {

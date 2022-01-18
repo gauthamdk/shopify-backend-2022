@@ -6,7 +6,6 @@ import Button from "react-bootstrap/Button";
 import EditItem from "./EditItem";
 import { ObjectId } from "mongoose";
 import { ItemDoc } from "../interfaces/ItemDoc";
-import Alert from "react-bootstrap/Alert";
 
 export default function DisplayItem({
   item,
@@ -46,6 +45,8 @@ export default function DisplayItem({
           amount={item.amount}
           getItems={getItems}
           save={setEdit}
+          setSuccess={setSuccess}
+          setErr={setErr}
         />
       ) : (
         <Row className="mb-2" key={item._id}>
