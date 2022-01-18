@@ -28,8 +28,7 @@ function App() {
     try {
       const res = await axios.delete(`/api/${id}`);
       setSuccessMsg(res.data.message);
-      const newItems = await getData();
-      setItems(newItems);
+      fetchData();
     } catch (err: any) {
       setErrMsg(err.response.data.message);
     }
@@ -75,33 +74,35 @@ function App() {
         {items.length > 0 ? (
           items.map((item) => {
             return (
-              <Row className="mb-2">
-                <Col xs={3}>{item.name}</Col>
-                <Col xs={4}>{item.description}</Col>
-                <Col xs={2}>{item.amount}</Col>
-                <Col xs={3} style={{ textAlign: "center" }}>
-                  <Button variant="primary" onClick={() => setEdit(!edit)}>
-                    Edit
-                  </Button>{" "}
-                  <Button
-                    variant="danger"
-                    onClick={() => handleDelete(item._id)}
-                  >
-                    Delete
-                  </Button>
-                  {edit ? (
-                    <EditItem
-                      id={item._id}
-                      name={item.name}
-                      desc={item.description}
-                      amount={item.amount}
-                      getItems={fetchData}
-                    ></EditItem>
-                  ) : (
-                    <></>
-                  )}
-                </Col>
-              </Row>
+              <>
+                {edit ? (
+                  <EditItem
+                    id={item._id}
+                    name={item.name}
+                    desc={item.description}
+                    amount={item.amount}
+                    getItems={fetchData}
+                    save={setEdit}
+                  ></EditItem>
+                ) : (
+                  <Row className="mb-2">
+                    <Col xs={3}>{item.name}</Col>
+                    <Col xs={4}>{item.description}</Col>
+                    <Col xs={2}>{item.amount}</Col>
+                    <Col xs={3} className="d-flex justify-content-around">
+                      <Button variant="primary" onClick={() => setEdit(!edit)}>
+                        Edit
+                      </Button>
+                      <Button
+                        variant="danger"
+                        onClick={() => handleDelete(item._id)}
+                      >
+                        Delete
+                      </Button>
+                    </Col>
+                  </Row>
+                )}
+              </>
             );
           })
         ) : (
