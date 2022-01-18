@@ -19,11 +19,13 @@ After you have installed NodeJS, clone this repository from github:
 
 `git clone git@github.com:gauthamdk/shopify-backend-2022.git`
 
-1. From your command line/terminal, navigate to this folder and run `npm run install` to install all the dependencies.
+1. From your command line/terminal, navigate to this folder and the frontend subfolder and run `npm install` to install all the dependencies.
 
-2. Run `npm run dev` to start the backend server and React frontend.
+2. In the same frontend folder, run `npm run start` to start up the local frontend.
 
 3. On your browser, go to http://localhost:3000 and the application should be running!
+
+NOTE: The backend is hosted on Heroku for security purposes due to the environment keys needed to connect to the MongoDB database.
 
 # Usage
 
