@@ -1,24 +1,37 @@
 import React, { useState } from "react";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import Button from "react-bootstrap/Button";
 import EditItem from "./EditItem";
 import { ObjectId } from "mongoose";
 import { ItemDoc } from "../interfaces/ItemDoc";
+import Alert from "react-bootstrap/Alert";
 
 export default function DisplayItem({
   item,
   getItems,
+  setSuccess,
+  setErr,
 }: {
   item: ItemDoc;
   getItems: () => Promise<void>;
+  setSuccess: React.Dispatch<React.SetStateAction<string>>;
+  setErr: React.Dispatch<React.SetStateAction<string>>;
 }) {
   const handleDelete = async (id: ObjectId) => {
     try {
       const res = await axios.delete(`/api/${id}`);
       getItems();
-    } catch (err: any) {}
+      setSuccess(res.data.message);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const serverError = err as AxiosError;
+        if (serverError && serverError.response) {
+          setErr(serverError.response.data.message);
+        }
+      }
+    }
   };
 
   const [edit, setEdit] = useState(false);

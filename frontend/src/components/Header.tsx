@@ -3,6 +3,7 @@ import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlusSquare, faWindowClose } from "@fortawesome/free-solid-svg-icons";
+import "../App.css";
 
 export default function Header({ showForm }: { showForm: () => void }) {
   const [close, setClose] = useState(false);
@@ -26,6 +27,7 @@ export default function Header({ showForm }: { showForm: () => void }) {
               showForm();
               setClose(false);
             }}
+            className="pointer"
           />
         ) : (
           <FontAwesomeIcon
@@ -35,6 +37,7 @@ export default function Header({ showForm }: { showForm: () => void }) {
               showForm();
               setClose(true);
             }}
+            className="pointer"
           />
         )}
       </Col>

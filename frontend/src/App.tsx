@@ -7,6 +7,7 @@ import AddItem from "./components/AddItem";
 import getData from "./functions/getData";
 import DisplayItem from "./components/DisplayItem";
 import Header from "./components/Header";
+import Alert from "react-bootstrap/Alert";
 
 function App() {
   // todo: add type
@@ -35,13 +36,23 @@ function App() {
       <h1>Inventory Tracking</h1>
       <div>
         <Header showForm={showForm} />
-        {successMsg}
-        {errMsg}
+        {successMsg.length > 0 ? (
+          <Alert variant="success">{successMsg}</Alert>
+        ) : (
+          <></>
+        )}
+        {errMsg.length > 0 ? <Alert variant="danger">{errMsg}</Alert> : <></>}
         {create ? <AddItem getItems={fetchData} /> : <></>}
         {items.length > 0 ? (
           items.map((item) => {
             return (
-              <DisplayItem key={item._id} getItems={fetchData} item={item} />
+              <DisplayItem
+                key={item._id}
+                getItems={fetchData}
+                item={item}
+                setSuccess={setSuccessMsg}
+                setErr={setErrMsg}
+              />
             );
           })
         ) : (

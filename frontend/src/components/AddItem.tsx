@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
+import Alert from "react-bootstrap/Alert";
 import axios from "axios";
 import "../App.css";
 
@@ -38,7 +39,7 @@ export default function AddItem({
   };
 
   return (
-    <Container className="addItem border">
+    <Container className="addItem">
       <Form onSubmit={(e) => handleSubmit(e)}>
         <Form.Group className="mb-3" controlId="formName">
           <Form.Label>Name</Form.Label>
@@ -78,8 +79,12 @@ export default function AddItem({
           Add Item
         </Button>
       </Form>
-      {successMsg}
-      {errMsg}
+      {successMsg.length > 0 ? (
+        <Alert variant="success">{successMsg}</Alert>
+      ) : (
+        <></>
+      )}
+      {errMsg.length > 0 ? <Alert variant="danger">{errMsg}</Alert> : <></>}
     </Container>
   );
 }
