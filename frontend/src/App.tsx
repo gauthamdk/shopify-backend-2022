@@ -31,20 +31,22 @@ function App() {
   }, []);
 
   return (
-    <Container>
-      <h1 className="App">Inventory Tracking</h1>
+    <Container className="App">
+      <h1>Inventory Tracking</h1>
       <div>
         <Header showForm={showForm} />
         {successMsg}
         {errMsg}
+        {create ? <AddItem getItems={fetchData} /> : <></>}
         {items.length > 0 ? (
           items.map((item) => {
-            return <DisplayItem getItems={fetchData} item={item} />;
+            return (
+              <DisplayItem key={item._id} getItems={fetchData} item={item} />
+            );
           })
         ) : (
           <></>
         )}
-        {create ? <AddItem getItems={fetchData} /> : <></>}
       </div>
     </Container>
   );

@@ -3,6 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import axios from "axios";
+import "../App.css";
 
 export default function AddItem({
   getItems,
@@ -37,7 +38,7 @@ export default function AddItem({
   };
 
   return (
-    <Container>
+    <Container className="addItem border">
       <Form onSubmit={(e) => handleSubmit(e)}>
         <Form.Group className="mb-3" controlId="formName">
           <Form.Label>Name</Form.Label>
