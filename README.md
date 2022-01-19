@@ -35,9 +35,11 @@ After you have installed NodeJS, clone this repository from github:
 
 1. From your command line/terminal, navigate to this folder and the frontend subfolder and run `npm install` to install all the dependencies.
 
-2. In the same frontend folder, run `npm run start` to start up the local frontend.
+2. In the same frontend folder, open the [package.json](./frontend/package.json) file and replace the line `"proxy": "http://localhost:8080"` with `"proxy": "https://shopify-backend-summer-2022.herokuapp.com"` to redirect to the backend that is hosted.
 
-3. On your browser, go to http://localhost:3000 and the application should be running!
+3. In the same frontend folder, run `npm run start` to start up the local frontend.
+
+4. On your browser, go to http://localhost:3000 and the application should be running!
 
 NOTE: The backend is hosted on Heroku for security purposes due to the environment keys needed to connect to the MongoDB database.
 
