@@ -15,7 +15,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const inventory_1 = require("../db/models/inventory");
 const download_1 = require("../functions/download");
+const constants_1 = require("../constants");
 const router = express_1.default.Router();
+const testRegex = (details) => {
+    const { name, description, amount } = details;
+    let integer = "";
+    try {
+        integer = amount.toString();
+    }
+    catch (err) {
+        return false;
+    }
+    return (constants_1.alphaNumRegex.test(name) &&
+        constants_1.alphaNumRegex.test(description) &&
+        constants_1.alphaNumRegex.test(integer));
+};
 router.get("/", (req, res) => {
     inventory_1.Item.find({}, (err, items) => {
         if (err) {
@@ -27,28 +41,38 @@ router.get("/", (req, res) => {
     });
 });
 router.post("/", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    const newItem = req.body;
-    const item = inventory_1.Item.build(newItem);
-    inventory_1.Item.create(item, (err, newItem) => {
-        if (err) {
-            res.json({ message: `Error adding new item: ${err}` });
-        }
-        else {
-            res.json({ message: "Created successfully" });
-        }
-    });
+    const itemDetails = req.body;
+    if (!testRegex(itemDetails)) {
+        res.status(400).json({ message: "Invalid input" });
+    }
+    else {
+        const item = inventory_1.Item.build(itemDetails);
+        inventory_1.Item.create(item, (err, newItem) => {
+            if (err) {
+                res.json({ message: `Error adding new item: ${err}` });
+            }
+            else {
+                res.json({ message: "Created successfully" });
+            }
+        });
+    }
 }));
 router.put("/:id", (req, res) => {
     const id = req.params.id;
     const item = req.body;
-    inventory_1.Item.findByIdAndUpdate(id, item, (err, newItem) => {
-        if (err) {
-            res.json({ message: `Error updating item: ${err}` });
-        }
-        else {
-            res.json({ message: "Item updated successfully" });
-        }
-    });
+    if (!testRegex(item)) {
+        res.status(400).json({ message: "Invalid input" });
+    }
+    else {
+        inventory_1.Item.findByIdAndUpdate(id, item, (err, newItem) => {
+            if (err) {
+                res.json({ message: `Error updating item: ${err}` });
+            }
+            else {
+                res.json({ message: "Item updated successfully" });
+            }
+        });
+    }
 });
 router.delete("/:id", (req, res) => {
     const id = req.params.id;
