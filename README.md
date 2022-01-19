@@ -17,7 +17,7 @@ If you do not have NodeJS installed one your machine, visit this [link](https://
 
 After you have installed NodeJS, clone this repository from github:
 
-`git clone git@github.com:gauthamdk/shopify-backend-2022.git`
+`git clone https://github.com/gauthamdk/shopify-backend-2022.git`
 
 - If you received the `environment_variables.txt` file in the submission of my application, follow the steps below or skip to [Frontend only](#frontend-only):
 
