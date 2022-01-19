@@ -25,11 +25,13 @@ After you have installed NodeJS, clone this repository from github:
 
 1. In the server folder, create a new file `.env`, and copy and paste the contents from the `environment_variables.txt` file into it (This is the MongoDB_URI link)
 
-2. From your command line/terminal, navigate to this folder and run `npm run install` to install all the dependencies.
+2. From your command line/terminal, navigate to the root folder and run `npm install` to install the common dependency.
 
-3. In the same folder, run `npm run dev` to start up the backend and frontend.
+3. From your command line/terminal, navigate to the root folder and run `npm run install` to install all the dependencies for the frontend and server.
 
-4. On your browser, go to http://localhost:3000 and the application should be running!
+4. In the same root folder, run `npm run dev` to start up the backend and frontend.
+
+5. On your browser, go to http://localhost:3000 and the application should be running!
 
 ## Frontend only
 
