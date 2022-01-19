@@ -27,7 +27,7 @@ After you have installed NodeJS, clone this repository from github:
 
 2. From your command line/terminal, navigate to the root folder and run `npm install` to install the common dependency.
 
-3. From your command line/terminal, navigate to the root folder and run `npm run install` to install all the dependencies for the frontend and server.
+3. In the same root folder and run `npm run install` to install all the dependencies for the frontend and server.
 
 4. In the same root folder, run `npm run dev` to start up the backend and frontend.
 
