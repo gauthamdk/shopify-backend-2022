@@ -19,6 +19,20 @@ After you have installed NodeJS, clone this repository from github:
 
 `git clone git@github.com:gauthamdk/shopify-backend-2022.git`
 
+- If you received the `environment_variables.txt` file in the submission of my application, follow the steps below or skip to [Frontend only](#frontend-only):
+
+## Frontend and backend
+
+1. In the server folder, create a new file `.env`, and copy and paste the contents from the `environment_variables.txt` file into it (This is the MongoDB_URI link)
+
+2. From your command line/terminal, navigate to this folder and run `npm run install` to install all the dependencies.
+
+3. In the same folder, run `npm run dev` to start up the backend and frontend.
+
+4. On your browser, go to http://localhost:3000 and the application should be running!
+
+## Frontend only
+
 1. From your command line/terminal, navigate to this folder and the frontend subfolder and run `npm install` to install all the dependencies.
 
 2. In the same frontend folder, run `npm run start` to start up the local frontend.
