@@ -3,7 +3,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Alert from "react-bootstrap/Alert";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import "../App.css";
 
 export default function AddItem({
@@ -28,8 +28,13 @@ export default function AddItem({
 
       setSuccessMsg(res.data.message);
       getItems();
-    } catch (err: any) {
-      setErrMsg(err.response.data.message);
+    } catch (err) {
+      if (axios.isAxiosError(err)) {
+        const serverError = err as AxiosError;
+        if (serverError && serverError.response) {
+          setErrMsg(serverError.response.data.message);
+        }
+      }
     }
   };
 
