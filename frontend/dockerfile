@@ -1,0 +1,22 @@
+# Basse image
+FROM node
+
+# Folder to put files in
+RUN mkdir -p /usr/src/app
+RUN mkdir -p /usr/src/app/frontend
+
+# Set working dir
+WORKDIR /usr/src/app/frontend
+
+# Copy packaeg.json and install 
+COPY package*.json ./
+RUN npm install
+
+# Copy app
+COPY . .
+
+# Export port
+EXPOSE 3000
+
+# Command to start
+CMD ["npm", "start"]
