@@ -1,0 +1,22 @@
+# Base Image
+FROM node
+
+# Make folder for files
+RUN mkdir -p /usr/src/app
+RUN mkdir -p /usr/src/app/server
+
+# Set working directory so thata all following commands runs in this directory
+WORKDIR /usr/src/app/backend
+
+# Copy package.json and install dependencies
+COPY package*.json ./
+RUN npm install
+
+# Copy server
+COPY . .
+
+# Export port 8080
+EXPOSE 8080
+
+# Command to start app
+CMD ["npm", "start"]
