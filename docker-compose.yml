@@ -1,0 +1,18 @@
+version: "3.9"
+services:
+  # Frontend container
+  frontend: #Name of service
+    build: ./frontend # path to dockerfile
+    ports:
+      - "3000:3000" # Bind ports host:container
+    container_name: frontend-docker
+    restart: always # What to do if it crashes
+    links:
+      - server
+
+  server:
+    build: ./server
+    ports:
+      - "8080:8080"
+    container_name: server-docker
+    restart: always
