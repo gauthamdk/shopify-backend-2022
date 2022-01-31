@@ -36,7 +36,7 @@ export default function EditItem({
     amount: number
   ) => {
     try {
-      const res = await axios.put(`/api/${id}`, {
+      await axios.put(`/api/${id}`, {
         name: name,
         description: description,
         amount: amount,

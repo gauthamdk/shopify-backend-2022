@@ -11,6 +11,7 @@ services:
       - server
 
   server:
+    env_file: "./server/.env"
     build: ./server
     ports:
       - "8080:8080"
